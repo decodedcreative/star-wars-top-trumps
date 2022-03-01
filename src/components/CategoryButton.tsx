@@ -26,6 +26,11 @@ const StyledCategoryButton = styled.button`
   }
 `;
 
+export type CategoryButtonData = {
+  id: number;
+  value: number | string | undefined;
+};
+
 interface CategoryButtonProps {
   label?: string;
   children?: string | number;
@@ -43,6 +48,7 @@ const CategoryButton = ({
     className="card__category"
     disabled={disabled}
     onClick={onClick}
+    aria-label={`${label} ${children}`}
   >
     <span>{label}</span>
     <span>{children}</span>

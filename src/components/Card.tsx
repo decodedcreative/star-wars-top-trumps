@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import starwarslogo from "../images/star-wars.png";
-import CategoryButton from "./CategoryButton";
+import CategoryButton, { CategoryButtonData } from "./CategoryButton";
 
 const StyledCard = styled.div`
   border-radius: 4px;
@@ -39,26 +39,30 @@ const StyledCard = styled.div`
   }
 `;
 
-interface CardProps {
-  data?: {
-    costInCredits?: number;
-    filmConnection?: {
-      totalCount: number;
-    };
-    maxAtmospheringSpeed?: number;
-    name?: string;
-    passengers?: string;
-    starshipClass?: string;
+export type CardData = {
+  costInCredits?: number;
+  filmConnection?: {
+    totalCount: number;
   };
+  maxAtmospheringSpeed?: number | string;
+  name?: string;
+  passengers?: string;
+  starshipClass?: string;
+};
+
+interface CardProps {
+  data?: CardData;
+  activeCategory: number | undefined;
   playerLabel?: string;
   score: number;
   readOnly?: boolean;
   showValues?: true;
-  onCategoryClick: (categoryValue: number | string) => void;
+  onCategoryClick: (category: CategoryButtonData) => void;
 }
 
 const Card = ({
   data,
+  activeCategory,
   playerLabel,
   score,
   readOnly,
@@ -79,28 +83,48 @@ const Card = ({
         <CategoryButton
           disabled={readOnly}
           label="Max Speed:"
-          onClick={() => onCategoryClick("max speed value")}
+          onClick={() =>
+            onCategoryClick({
+              id: 0,
+              value: data?.maxAtmospheringSpeed,
+            })
+          }
         >
           {showValues ? data?.maxAtmospheringSpeed : "?"}
         </CategoryButton>
         <CategoryButton
           disabled={readOnly}
           label="Credit Cost:"
-          onClick={() => onCategoryClick("credit cost")}
+          onClick={() =>
+            onCategoryClick({
+              id: 1,
+              value: data?.costInCredits,
+            })
+          }
         >
           {showValues ? data?.costInCredits : "?"}
         </CategoryButton>
         <CategoryButton
           disabled={readOnly}
           label="Passengers:"
-          onClick={() => onCategoryClick("passengers")}
+          onClick={() =>
+            onCategoryClick({
+              id: 2,
+              value: data?.passengers,
+            })
+          }
         >
           {showValues ? data?.passengers : "?"}
         </CategoryButton>
         <CategoryButton
           disabled={readOnly}
           label="Film appearances:"
-          onClick={() => onCategoryClick("films")}
+          onClick={() =>
+            onCategoryClick({
+              id: 3,
+              value: films,
+            })
+          }
         >
           {showValues ? films : "?"}
         </CategoryButton>
